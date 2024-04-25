@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Pressable, Alert, Platform } from "react-native";
+import { View, Text, Pressable, Alert, Platform, TouchableOpacity } from "react-native";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
@@ -119,6 +119,25 @@ const CameraScreen = () => {
     navigation.navigate("ImageClassifier");
   };
 
+  const Menu = () => {
+    return (
+      <View style={stylesHome.menuContainer}>
+        <TouchableOpacity onPress={takePicture} style={stylesHome.menuButton}>
+          <Text style={stylesHome.menuButtonText}>Capture</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={pickImage} style={stylesHome.menuButton}>
+          <Text style={stylesHome.menuButtonText}>Gallery</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleSignOut} style={stylesHome.menuButton}>
+          <Text style={stylesHome.menuButtonText}>Sign Out</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleClassifier} style={stylesHome.menuButton}>
+          <Text style={stylesHome.menuButtonText}>Classifier</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   if (
     cameraPermission === null ||
     imagePermission === null ||
@@ -139,6 +158,7 @@ const CameraScreen = () => {
       <View style={stylesHome.container}>
         <Text style={stylesHome.title}>Welcome to Camera App!</Text>
       </View>
+
       <View style={stylesCamera.cameraContainer}>
         {isFocused && (
           <Camera
@@ -149,20 +169,7 @@ const CameraScreen = () => {
           />
         )}
       </View>
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <Pressable onPress={takePicture} style={stylesHome.button}>
-          <Text style={stylesHome.buttonText}>Capture</Text>
-        </Pressable>
-        <Pressable onPress={pickImage} style={stylesHome.button}>
-          <Text style={stylesHome.buttonText}>Gallery</Text>
-        </Pressable>
-        <Pressable onPress={handleSignOut} style={stylesHome.button}>
-          <Text style={stylesHome.buttonText}>Sign Out</Text>
-        </Pressable>
-        <Pressable onPress={handleClassifier} style={stylesHome.button}>
-          <Text style={stylesHome.buttonText}>Classifier</Text>
-        </Pressable>
-      </View>
+      <Menu />
     </View>
   );
 };
